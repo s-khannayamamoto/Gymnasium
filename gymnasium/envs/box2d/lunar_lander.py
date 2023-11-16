@@ -390,7 +390,7 @@ class LunarLander(gym.Env, EzPickle):
             self.moon.CreateEdgeFixture(vertices=[p1, p2], density=0, friction=0.1)
             self.sky_polys.append([p1, p2, (p2[0], H), (p1[0], H)])
 
-        self.moon.color1 = (0.0, 0.0, 0.0)
+        self.moon.color1 = (100.0, 0.0, 0.0)
         self.moon.color2 = (0.0, 0.0, 0.0)
 
         # Create Lander body
@@ -580,7 +580,7 @@ class LunarLander(gym.Env, EzPickle):
             
             
             # ANGLE CHECK
-            angle_test = np.atan2(rotated_oy, rotated_ox) - self.lander.angle
+            angle_test = np.arctan2(rotated_oy, rotated_ox) - self.lander.angle
             print(angle_test)
             print("THIS IS THE THRUSTER ANGLE")
             
