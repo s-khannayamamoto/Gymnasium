@@ -410,8 +410,8 @@ class LunarLander(gym.Env, EzPickle):
                 restitution=0.0,
             ),  # 0.99 bouncy
         )
-        self.lander.color1 = (128, 102, 230)
-        self.lander.color2 = (77, 77, 128)
+        self.lander.color1 = (255, 0, 0) #(128, 102, 230)
+        self.lander.color2 = (255, 0, 0) # (77, 77, 128)
 
         # Apply the initial random impulse to the lander
         self.lander.ApplyForceToCenter(
