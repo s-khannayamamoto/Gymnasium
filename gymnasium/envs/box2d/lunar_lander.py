@@ -1,4 +1,7 @@
-__credits__ = ["Andrea PIERRÉ"]
+l__credits__ = ["Andrea PIERRÉ"]
+
+
+print("IS THIS EVEN OPENED")
 
 import math
 import warnings
@@ -36,8 +39,8 @@ if TYPE_CHECKING:
 FPS = 50
 SCALE = 30.0  # affects how fast-paced the game is, forces should be adjusted as well
 
-MAIN_ENGINE_POWER = 13.0
-SIDE_ENGINE_POWER = 0.6
+MAIN_ENGINE_POWER = 30.0
+SIDE_ENGINE_POWER = 0 #0.6
 
 INITIAL_RANDOM = 1000.0  # Set 1500 to make game harder
 
@@ -569,13 +572,18 @@ class LunarLander(gym.Env, EzPickle):
                 -tip[1] * (MAIN_ENGINE_Y_LOCATION / SCALE + 2 * dispersion[0])
                 - side[1] * dispersion[1]
             )
-            angle_to_be_applied = map_discete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10)
+            angle_to_be_applied = np.radians(45) # map_discete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10)
             
             # Rotate the impulse vector by the calculated angle
             rotated_ox = ox * np.cos(angle_to_be_applied) - oy * np.sin(angle_to_be_applied)
             rotated_oy = ox * np.sin(angle_to_be_applied) + oy * np.cos(angle_to_be_applied)
             
-
+            
+            # ANGLE CHECK
+            angle_test = np.atan2(rotated_oy, rotated_ox) - self.lander.angle
+            print(angle_test)
+            print("THIS IS THE THRUSTER ANGLE")
+            
             impulse_pos = (self.lander.position[0] + rotated_ox, self.lander.position[1] + rotated_oy)
             if self.render_mode is not None:
                 # particles are just a decoration, with no impact on the physics, so don't add them when not rendering
@@ -629,7 +637,7 @@ class LunarLander(gym.Env, EzPickle):
                 self.lander.position[0] + ox - tip[0] * 17 / SCALE,
                 self.lander.position[1] + oy + tip[1] * SIDE_ENGINE_HEIGHT / SCALE,
             )
-            if self.render_mode is not None:
+            if False: #self.render_mode is not None:
                 # particles are just a decoration, with no impact on the physics, so don't add them when not rendering
                 p = self._create_particle(0.7, impulse_pos[0], impulse_pos[1], s_power)
                 p.ApplyLinearImpulse(
@@ -694,6 +702,9 @@ class LunarLander(gym.Env, EzPickle):
         return np.array(state, dtype=np.float32), reward, terminated, False, {}
 
     def render(self):
+        
+        print("RUNNING RENDER")
+        
         if self.render_mode is None:
             assert self.spec is not None
             gym.logger.warn(
