@@ -572,7 +572,7 @@ class LunarLander(gym.Env, EzPickle):
                 -tip[1] * (MAIN_ENGINE_Y_LOCATION / SCALE + 2 * dispersion[0])
                 - side[1] * dispersion[1]
             )
-            angle_to_be_applied = -45 #self.map_discrete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10)
+            angle_to_be_applied = self.map_discrete_state_to_angle(action, num_actions=10, min_angle=-45, max_angle=45)
             
             # Rotate the impulse vector by the calculated angle
             rotated_ox = ox * np.cos(angle_to_be_applied) - oy * np.sin(angle_to_be_applied)
