@@ -488,7 +488,7 @@ class LunarLander(gym.Env, EzPickle):
         while self.particles and (all or self.particles[0].ttl < 0):
             self.world.DestroyBody(self.particles.pop(0))
             
-    def map_discrete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10):
+    def map_discrete_state_to_angle(self, action, num_actions=10, min_angle=-10, max_angle=10):
         if action < 0 or action >= num_actions:
             raise ValueError("Invalid state, must be in the range [0, num_states)")
 
@@ -572,7 +572,7 @@ class LunarLander(gym.Env, EzPickle):
                 -tip[1] * (MAIN_ENGINE_Y_LOCATION / SCALE + 2 * dispersion[0])
                 - side[1] * dispersion[1]
             )
-            angle_to_be_applied = np.radians(45) # map_discete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10)
+            angle_to_be_applied = self.map_discrete_state_to_angle(action, num_actions=10, min_angle=-10, max_angle=10)
             
             # Rotate the impulse vector by the calculated angle
             rotated_ox = ox * np.cos(angle_to_be_applied) - oy * np.sin(angle_to_be_applied)
