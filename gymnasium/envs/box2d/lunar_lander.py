@@ -581,8 +581,8 @@ class LunarLander(gym.Env, EzPickle):
             
             # ANGLE CHECK
             angle_test = np.arctan2(rotated_oy, rotated_ox) - self.lander.angle
-            print(angle_test)
-            print("THIS IS THE THRUSTER ANGLE")
+            #print(angle_test)
+            #print("THIS IS THE THRUSTER ANGLE")
             
             impulse_pos = (self.lander.position[0] + rotated_ox, self.lander.position[1] + rotated_oy)
             if self.render_mode is not None:
