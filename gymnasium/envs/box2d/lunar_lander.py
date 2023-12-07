@@ -684,10 +684,11 @@ class LunarLander(gym.Env, EzPickle):
             reward = shaping - self.prev_shaping
         self.prev_shaping = shaping
 
+        # Adjust reward based on engine/vernier thrust
         reward -= (
-            m_power * 0.30
+            m_power * 0.01 # main engine
         )  # less fuel spent is better, about -30 for heuristic landing
-        reward -= s_power * 0.03
+        reward -= s_power * 0.005 # vernier thrusters
 
         terminated = False
         if self.game_over or abs(state[0]) >= 1.0:
